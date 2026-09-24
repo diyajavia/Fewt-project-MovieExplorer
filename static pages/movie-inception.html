@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="View runtime, ratings, synopsis, cast, and recommendations for Inception on CineVerse.">
+    <title>CineVerse - Inception</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top py-3" id="main-nav">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="index.html" id="brand-logo">
+                    <i class="bi bi-film me-2"></i>CineVerse
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"
+                    id="nav-toggle-btn">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html" id="link-home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="search.html" id="link-search">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="watchlist.html" id="link-watchlist">Watchlist</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main style="padding-top: 70px;">
+        <!-- Movie Details Banner (Backdrop as background) -->
+        <section class="detail-header" style="background-image: url('assets/inception_image.png');"
+            id="detail-header-section">
+            <div class="detail-header-overlay"></div>
+            <div class="container detail-container">
+                <div class="row align-items-end g-4">
+                    <!-- Poster Column -->
+                    <div class="col-md-4 col-lg-3 text-center text-md-start">
+                        <img src="assets/inception_image.png" alt="Inception Poster" class="detail-poster"
+                            id="detail-movie-poster">
+                    </div>
+                    <!-- Info Column -->
+                    <div class="col-md-8 col-lg-9">
+                        <span class="badge bg-danger mb-3 px-3 py-2 text-uppercase tracking-wider fw-bold"
+                            id="detail-genre-badge">
+                            Action, Sci-Fi, Adventure
+                        </span>
+                        <h1 class="display-4 fw-extrabold text-white mb-2" id="detail-title">Inception</h1>
+
+                        <div class="d-flex align-items-center gap-3 mb-4 flex-wrap text-secondary">
+                            <span class="movie-badge-info text-white"><i class="bi bi-star-fill text-warning me-1"></i>
+                                8.8/10</span>
+                            <span class="movie-badge-info">2010</span>
+                            <span class="movie-badge-info">148 min</span>
+                            <span class="movie-badge-info">Language: EN</span>
+                        </div>
+
+                        <div class="d-flex gap-3 flex-wrap">
+                            <button class="btn btn-premium btn-detail-watchlist" data-movie-id="4"
+                                onclick="toggleWatchlist(4)" id="btn-detail-watchlist-trigger">
+                                <i class="bi bi-bookmark-plus"></i> Add to Watchlist
+                            </button>
+                            <a href="index.html" class="btn btn-secondary-outline" id="btn-back-home">
+                                <i class="bi bi-arrow-left"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Movie Details Body -->
+        <section class="container py-5" id="detail-body-section">
+            <div class="row g-5">
+                <!-- Left Main Content Column -->
+                <div class="col-lg-8">
+                    <!-- Overview -->
+                    <div class="mb-5" id="detail-overview-block">
+                        <h2 class="h3 border-bottom border-secondary pb-2 mb-3">Synopsis</h2>
+                        <p class="text-secondary lead-sm" id="detail-overview-text">
+                            A thief who steals corporate secrets through the use of dream-sharing technology is given
+                            the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom
+                            the project.
+                        </p>
+                    </div>
+
+                    <!-- Cast & Crew -->
+                    <div id="detail-cast-block">
+                        <h2 class="h3 border-bottom border-secondary pb-2 mb-4">Cast Credits</h2>
+                        <div class="cast-scroll-wrapper" id="cast-list">
+                            <!-- Actor 1 -->
+                            <div class="cast-card">
+                                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80"
+                                    alt="Leonardo DiCaprio" class="cast-img">
+                                <div class="cast-name">Leonardo DiCaprio</div>
+                                <div class="cast-character">Cobb</div>
+                            </div>
+                            <!-- Actor 2 -->
+                            <div class="cast-card">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
+                                    alt="Joseph Gordon-Levitt" class="cast-img">
+                                <div class="cast-name">Joseph Gordon-Levitt</div>
+                                <div class="cast-character">Arthur</div>
+                            </div>
+                            <!-- Actor 3 -->
+                            <div class="cast-card">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80"
+                                    alt="Elliot Page" class="cast-img">
+                                <div class="cast-name">Elliot Page</div>
+                                <div class="cast-character">Ariadne</div>
+                            </div>
+                            <!-- Actor 4 -->
+                            <div class="cast-card">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80"
+                                    alt="Tom Hardy" class="cast-img">
+                                <div class="cast-name">Tom Hardy</div>
+                                <div class="cast-character">Eames</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Recommendations Column -->
+                <div class="col-lg-4">
+                    <h2 class="h4 mb-4" id="recommendations-title">Similar Recommendations</h2>
+                    <div class="row g-3" id="recommendations-list">
+                        <!-- Interstellar Card -->
+                        <div class="col-12">
+                            <div class="card bg-dark border-secondary overflow-hidden movie-card" style="width:100%;">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-4">
+                                        <a href="movie-interstellar.html">
+                                            <img src="assets/interstellar_image.png" alt="Poster" class="img-fluid"
+                                                style="aspect-ratio:2/3; object-fit:cover;">
+                                        </a>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body py-2">
+                                            <h5 class="card-title text-truncate mb-1" style="font-size:0.95rem;">
+                                                Interstellar</h5>
+                                            <div class="small text-secondary mb-1"><i
+                                                    class="bi bi-star-fill text-warning me-1"></i> 8.7 | 2014</div>
+                                            <a href="movie-interstellar.html"
+                                                class="btn btn-sm btn-outline-info py-0 px-2"
+                                                style="font-size:0.75rem;">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Dark Knight Card -->
+                        <div class="col-12">
+                            <div class="card bg-dark border-secondary overflow-hidden movie-card" style="width:100%;">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-4">
+                                        <a href="movie-darkknight.html">
+                                            <img src="assets/darkknight_image.png" alt="Poster" class="img-fluid"
+                                                style="aspect-ratio:2/3; object-fit:cover;">
+                                        </a>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body py-2">
+                                            <h5 class="card-title text-truncate mb-1" style="font-size:0.95rem;">The
+                                                Dark Knight</h5>
+                                            <div class="small text-secondary mb-1"><i
+                                                    class="bi bi-star-fill text-warning me-1"></i> 9.0 | 2008</div>
+                                            <a href="movie-darkknight.html"
+                                                class="btn btn-sm btn-outline-info py-0 px-2"
+                                                style="font-size:0.75rem;">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="py-5 text-center text-secondary" id="main-footer">
+        <div class="container">
+            <p class="mb-2"><span class="text-white fw-bold"><i class="bi bi-film me-2"></i>CineVerse</span> - Premium
+                Static Movie Portal</p>
+            <p class="small text-secondary-50">&copy; 2026 CineVerse. Built with Bootstrap and Vanilla JS for frontend
+                exploration.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="#" class="text-secondary hover-text-white" aria-label="Privacy Policy"><i
+                        class="bi bi-shield-lock-fill"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Github"><i class="bi bi-github"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Terms of Service"><i
+                        class="bi bi-file-earmark-text-fill"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Watchlist Core & Logic Script -->
+    <script src="watchlist.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search through our premium catalog of hand-picked classic movies. Filter by genres, ratings, and release years in real time.">
+    <title>CineVerse - Discover & Filter Movies</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top py-3" id="main-nav">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="index.html" id="brand-logo">
+                    <i class="bi bi-film me-2"></i>CineVerse
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation" id="nav-toggle-btn">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html" id="link-home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="search.html" id="link-search">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="watchlist.html" id="link-watchlist">Watchlist</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main style="padding-top: 120px;" class="min-vh-100 container">
+        <!-- Search and Filter Controls -->
+        <section id="search-controls-container" class="mb-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="mb-4 text-center text-md-start" id="search-page-header">Discover Movies</h1>
+                    
+                    <!-- Search Input Box -->
+                    <div class="search-input-group mb-4" id="search-bar-wrapper">
+                        <i class="bi bi-search ms-3 text-secondary fs-5" id="icon-search-query"></i>
+                        <input type="text" class="search-input-field" placeholder="Search by title, description..." id="search-input" aria-label="Search Input">
+                    </div>
+
+                    <!-- Filters Options Layout -->
+                    <div class="row g-3" id="filters-row">
+                        <!-- Genre Filter -->
+                        <div class="col-md-4">
+                            <label for="filter-genre" class="form-label text-secondary small fw-semibold">Genre</label>
+                            <select class="form-select filter-select" id="filter-genre" aria-label="Filter by Genre">
+                                <option value="">All Genres</option>
+                                <option value="Action">Action</option>
+                                <option value="Sci-Fi">Sci-Fi</option>
+                                <option value="Adventure">Adventure</option>
+                                <option value="Drama">Drama</option>
+                                <option value="Crime">Crime</option>
+                                <option value="Animation">Animation</option>
+                            </select>
+                        </div>
+                        <!-- Rating Filter -->
+                        <div class="col-md-4">
+                            <label for="filter-rating" class="form-label text-secondary small fw-semibold">Minimum Rating</label>
+                            <select class="form-select filter-select" id="filter-rating" aria-label="Filter by Minimum Rating">
+                                <option value="">All Ratings</option>
+                                <option value="8.8">Top Rated (8.8+)</option>
+                                <option value="8.3">Highly Rated (8.3+)</option>
+                                <option value="7.5">Decent Rating (7.5+)</option>
+                            </select>
+                        </div>
+                        <!-- Release Year Filter -->
+                        <div class="col-md-4">
+                            <label for="filter-year" class="form-label text-secondary small fw-semibold">Release Era</label>
+                            <select class="form-select filter-select" id="filter-year" aria-label="Filter by Year Era">
+                                <option value="">All Eras</option>
+                                <option value="2020">2020s (New Releases)</option>
+                                <option value="2010">2010s (Golden Era)</option>
+                                <option value="2000">Pre-2010 (Classics)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Results Grid -->
+        <section id="results-display-section" class="py-2">
+            <h2 class="h4 mb-4" id="results-title-header">Search Results</h2>
+            <div class="row g-4" id="search-results-grid">
+                <!-- Javascript will render results cards here dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="py-5 text-center text-secondary mt-5" id="main-footer">
+        <div class="container">
+            <p class="mb-2"><span class="text-white fw-bold"><i class="bi bi-film me-2"></i>CineVerse</span> - Premium Static Movie Portal</p>
+            <p class="small text-secondary-50">&copy; 2026 CineVerse. Built with Bootstrap and Vanilla JS for frontend exploration.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="#" class="text-secondary hover-text-white" aria-label="Privacy Policy"><i class="bi bi-shield-lock-fill"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Github"><i class="bi bi-github"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Terms of Service"><i class="bi bi-file-earmark-text-fill"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Watchlist Core & Logic Script -->
+    <script src="watchlist.js"></script>
+</body>
+</html>

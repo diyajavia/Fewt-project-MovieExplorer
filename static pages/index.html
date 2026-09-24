@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Explore popular and trending movies, view details, cast, similar recommendations, and manage your custom watchlist on CineVerse.">
+    <title>CineVerse - Explore Movies & Customize Watchlist</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top py-3" id="main-nav">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="index.html" id="brand-logo">
+                    <i class="bi bi-film me-2"></i>CineVerse
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"
+                    id="nav-toggle-btn">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html" id="link-home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="search.html" id="link-search">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="watchlist.html" id="link-watchlist">Watchlist</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main style="padding-top: 70px;">
+        <!-- Hero Banner: Most Trending Movie (Avengers: Endgame) -->
+        <section class="hero-banner" style="background-image: url('assets/avengers_backdrop.png');"
+            id="hero-banner-section">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <span class="badge bg-danger mb-3 px-3 py-2 text-uppercase tracking-wider fw-bold" id="trending-tag"
+                    style="letter-spacing: 0.1em;">
+                    <i class="bi bi-fire me-1"></i> #1 Trending Now
+                </span>
+                <h1 class="hero-title" id="hero-title-endgame">Avengers: Endgame</h1>
+                <div class="d-flex align-items-center gap-3 mb-3 flex-wrap text-secondary">
+                    <span class="movie-badge-info text-white"><i class="bi bi-star-fill text-warning me-1"></i>
+                        8.3</span>
+                    <span>2019</span>
+                    <span>181 min</span>
+                    <span>Action, Sci-Fi, Adventure</span>
+                </div>
+                <p class="lead text-light mb-4" id="hero-desc-endgame"
+                    style="max-width: 650px; font-size: 1.05rem; opacity: 0.9;">
+                    After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of
+                    remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore
+                    balance to the universe.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="movie-avengers.html" class="btn btn-premium" id="btn-hero-info">
+                        <i class="bi bi-info-circle-fill"></i> View Details
+                    </a>
+                    <button class="btn btn-secondary-outline btn-detail-watchlist" data-movie-id="1"
+                        onclick="toggleWatchlist(1)" id="btn-hero-watchlist" title="Add to Watchlist">
+                        <i class="bi bi-bookmark-plus"></i> Add to Watchlist
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Movie Scroll Tracks -->
+        <section class="container py-5" id="trending-scroller-section">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="mb-0">Trending Now</h2>
+                <a href="search.html" class="text-decoration-none text-info" id="view-all-trending">View All <i
+                        class="bi bi-chevron-right"></i></a>
+            </div>
+
+            <!-- Horizontal Scroller (Endgame is 1st) -->
+            <div class="movie-scroll-wrapper" id="trending-scroller">
+                <!-- Movie 1 (Avengers: Endgame) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="1"
+                            onclick="event.preventDefault(); toggleWatchlist(1);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 8.3
+                        </div>
+                        <a href="movie-avengers.html">
+                            <img src="assets/avengers_image.png" alt="Avengers Endgame Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-avengers.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">Avengers: Endgame</h3>
+                            <div class="movie-card-meta">
+                                <span>2019</span>
+                                <span>181 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Movie 2 (Interstellar) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="2"
+                            onclick="event.preventDefault(); toggleWatchlist(2);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 8.7
+                        </div>
+                        <a href="movie-interstellar.html">
+                            <img src="assets/interstellar_image.png" alt="Interstellar Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-interstellar.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">Interstellar</h3>
+                            <div class="movie-card-meta">
+                                <span>2014</span>
+                                <span>169 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Movie 3 (The Dark Knight) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="3"
+                            onclick="event.preventDefault(); toggleWatchlist(3);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 9.0
+                        </div>
+                        <a href="movie-darkknight.html">
+                            <img src="assets/darkknight_image.png" alt="The Dark Knight Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-darkknight.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">The Dark Knight</h3>
+                            <div class="movie-card-meta">
+                                <span>2008</span>
+                                <span>152 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Movie 4 (Inception) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="4"
+                            onclick="event.preventDefault(); toggleWatchlist(4);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 8.8
+                        </div>
+                        <a href="movie-inception.html">
+                            <img src="assets/inception_image.png" alt="Inception Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-inception.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">Inception</h3>
+                            <div class="movie-card-meta">
+                                <span>2010</span>
+                                <span>148 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Movie 5 (Spider-Man: Into the Spider-Verse) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="5"
+                            onclick="event.preventDefault(); toggleWatchlist(5);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 8.4
+                        </div>
+                        <a href="movie-spiderverse.html">
+                            <img src="assets/spiderverse_image.png" alt="Spider-Man Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-spiderverse.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">Spider-Man: Into the Spider-Verse</h3>
+                            <div class="movie-card-meta">
+                                <span>2018</span>
+                                <span>117 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Movie 6 (Avatar: The Way of Water) -->
+                <div class="movie-card">
+                    <div class="movie-card-img-wrapper">
+                        <button class="watchlist-btn-trigger" data-movie-id="6"
+                            onclick="event.preventDefault(); toggleWatchlist(6);"
+                            aria-label="Toggle Watchlist"></button>
+                        <div class="movie-rating-badge">
+                            <i class="bi bi-star-fill"></i> 7.6
+                        </div>
+                        <a href="movie-avatar.html">
+                            <img src="assets/avatar_image.png" alt="Avatar Poster" class="movie-card-img"
+                                loading="lazy">
+                        </a>
+                    </div>
+                    <a href="movie-avatar.html" style="text-decoration: none; color: inherit;">
+                        <div class="movie-card-info">
+                            <h3 class="movie-card-title">Avatar: The Way of Water</h3>
+                            <div class="movie-card-meta">
+                                <span>2022</span>
+                                <span>192 min</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Category Section -->
+        <section class="container py-4 mb-5" id="categories-section">
+            <div class="row">
+                <!-- Col 1: Top Rated Masterpieces -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="mb-4">Top Rated Masterpieces</h2>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="card bg-dark text-white border-secondary h-100 overflow-hidden movie-card"
+                                style="width:100%;">
+                                <div class="movie-card-img-wrapper">
+                                    <button class="watchlist-btn-trigger" data-movie-id="3"
+                                        onclick="event.preventDefault(); toggleWatchlist(3);"
+                                        aria-label="Toggle Watchlist"></button>
+                                    <div class="movie-rating-badge"><i class="bi bi-star-fill"></i> 9.0</div>
+                                    <a href="movie-darkknight.html"><img src="assets/darkknight_image.png" alt="Poster"
+                                            class="card-img-top movie-card-img"
+                                            style="aspect-ratio:2/3; object-fit:cover;"></a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">The Dark Knight</h5>
+                                    <p class="card-text text-secondary small">Masterpiece crime drama action film by
+                                        Christopher Nolan.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card bg-dark text-white border-secondary h-100 overflow-hidden movie-card"
+                                style="width:100%;">
+                                <div class="movie-card-img-wrapper">
+                                    <button class="watchlist-btn-trigger" data-movie-id="4"
+                                        onclick="event.preventDefault(); toggleWatchlist(4);"
+                                        aria-label="Toggle Watchlist"></button>
+                                    <div class="movie-rating-badge"><i class="bi bi-star-fill"></i> 8.8</div>
+                                    <a href="movie-inception.html"><img src="assets/inception_image.png" alt="Poster"
+                                            class="card-img-top movie-card-img"
+                                            style="aspect-ratio:2/3; object-fit:cover;"></a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">Inception</h5>
+                                    <p class="card-text text-secondary small">Mind-bending heist thriller film
+                                        traversing dream realms.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Sci-Fi & Adventure Selection -->
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Sci-Fi Highlights</h2>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="card bg-dark text-white border-secondary h-100 overflow-hidden movie-card"
+                                style="width:100%;">
+                                <div class="movie-card-img-wrapper">
+                                    <button class="watchlist-btn-trigger" data-movie-id="2"
+                                        onclick="event.preventDefault(); toggleWatchlist(2);"
+                                        aria-label="Toggle Watchlist"></button>
+                                    <div class="movie-rating-badge"><i class="bi bi-star-fill"></i> 8.7</div>
+                                    <a href="movie-interstellar.html"><img src="assets/interstellar_image.png"
+                                            alt="Poster" class="card-img-top movie-card-img"
+                                            style="aspect-ratio:2/3; object-fit:cover;"></a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">Interstellar</h5>
+                                    <p class="card-text text-secondary small">Emotional cinematic exploration of space
+                                        and relativity.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card bg-dark text-white border-secondary h-100 overflow-hidden movie-card"
+                                style="width:100%;">
+                                <div class="movie-card-img-wrapper">
+                                    <button class="watchlist-btn-trigger" data-movie-id="6"
+                                        onclick="event.preventDefault(); toggleWatchlist(6);"
+                                        aria-label="Toggle Watchlist"></button>
+                                    <div class="movie-rating-badge"><i class="bi bi-star-fill"></i> 7.6</div>
+                                    <a href="movie-avatar.html"><img src="assets/avatar_image.png" alt="Poster"
+                                            class="card-img-top movie-card-img"
+                                            style="aspect-ratio:2/3; object-fit:cover;"></a>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">Avatar: The Way of Water</h5>
+                                    <p class="card-text text-secondary small">Breathtaking visual sci-fi underwater
+                                        return to Pandora.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="py-5 text-center text-secondary mt-auto" id="main-footer">
+        <div class="container">
+            <p class="mb-2"><span class="text-white fw-bold"><i class="bi bi-film me-2"></i>CineVerse</span> - Premium
+                Static Movie Portal</p>
+            <p class="small text-secondary-50">&copy; 2026 CineVerse. Built with Bootstrap and Vanilla JS for frontend
+                exploration.</p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="#" class="text-secondary hover-text-white" aria-label="Privacy Policy"><i
+                        class="bi bi-shield-lock-fill"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Github"><i class="bi bi-github"></i></a>
+                <a href="#" class="text-secondary hover-text-white" aria-label="Terms of Service"><i
+                        class="bi bi-file-earmark-text-fill"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Watchlist Core & Logic Script -->
+    <script src="watchlist.js"></script>
+</body>
+
+</html>

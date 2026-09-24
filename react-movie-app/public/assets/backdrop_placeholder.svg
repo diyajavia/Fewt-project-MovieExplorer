@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="backGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e111a"/>
+      <stop offset="50%" stop-color="#080a10"/>
+      <stop offset="100%" stop-color="#040508"/>
+    </linearGradient>
+    <radialGradient id="centerLight" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.35"/>
+      <stop offset="35%" stop-color="#06b6d4" stop-opacity="0.12"/>
+      <stop offset="70%" stop-color="#000000" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#040508" stop-opacity="0.95"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#backGrad)"/>
+  <rect width="1920" height="1080" fill="url(#centerLight)"/>
+
+  <!-- Cinema Projector Beam -->
+  <polygon points="960,0 300,1080 1620,1080" fill="url(#beam)"/>
+
+  <!-- Subtle Film Reel / Cinema elements -->
+  <g opacity="0.15" stroke="#ffffff" stroke-width="2" fill="none">
+    <circle cx="960" cy="450" r="140"/>
+    <circle cx="960" cy="450" r="80"/>
+    <circle cx="960" cy="450" r="25"/>
+    <line x1="960" y1="310" x2="960" y2="590"/>
+    <line x1="820" y1="450" x2="1100" y2="450"/>
+  </g>
+
+  <!-- Title / Watermark -->
+  <text x="960" y="660" font-family="'Outfit', -apple-system, sans-serif" font-weight="700" font-size="36" fill="#ffffff" text-anchor="middle" letter-spacing="4" opacity="0.8">
+    CINEVERSE CINEMA
+  </text>
+  <text x="960" y="705" font-family="'Inter', -apple-system, sans-serif" font-weight="400" font-size="20" fill="#9ca3af" text-anchor="middle" letter-spacing="2" opacity="0.6">
+    High Definition Cinema Experience
+  </text>
+</svg>

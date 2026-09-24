@@ -1,0 +1,80 @@
+export const MOVIE_DATABASE = [
+    {
+        id: 1,
+        title: "Avengers: Endgame",
+        year: 2019,
+        rating: 8.3,
+        genres: ["Action", "Sci-Fi", "Adventure"],
+        runtime: "181 min",
+        poster: "assets/avengers_image.png",
+        backdrop: "assets/avengers_backdrop.png",
+        link: "/movie-avengers.html",
+        language: "en",
+        overview: "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
+    },
+    {
+        id: 2,
+        title: "Interstellar",
+        year: 2014,
+        rating: 8.7,
+        genres: ["Sci-Fi", "Drama", "Adventure"],
+        runtime: "169 min",
+        poster: "assets/interstellar_image.png",
+        backdrop: "assets/interstellar_image.png",
+        link: "/movie-interstellar.html",
+        language: "en",
+        overview: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage."
+    },
+    {
+        id: 3,
+        title: "The Dark Knight",
+        year: 2008,
+        rating: 9.0,
+        genres: ["Action", "Crime", "Drama"],
+        runtime: "152 min",
+        poster: "assets/darkknight_image.png",
+        backdrop: "assets/darkknight_image.png",
+        link: "/movie-darkknight.html",
+        language: "en",
+        overview: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice."
+    },
+    {
+        id: 4,
+        title: "Inception",
+        year: 2010,
+        rating: 8.8,
+        genres: ["Action", "Sci-Fi", "Adventure"],
+        runtime: "148 min",
+        poster: "assets/inception_image.png",
+        backdrop: "assets/inception_image.png",
+        link: "/movie-inception.html",
+        language: "en",
+        overview: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project."
+    },
+    {
+        id: 5,
+        title: "Spider-Man: Into the Spider-Verse",
+        year: 2018,
+        rating: 8.4,
+        genres: ["Animation", "Action", "Adventure"],
+        runtime: "117 min",
+        poster: "assets/spiderverse_image.png",
+        backdrop: "assets/spiderverse_image.png",
+        link: "/movie-spiderverse.html",
+        language: "en",
+        overview: "Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities."
+    },
+    {
+        id: 6,
+        title: "Avatar: The Way of Water",
+        year: 2022,
+        rating: 7.6,
+        genres: ["Sci-Fi", "Action", "Adventure"],
+        runtime: "192 min",
+        poster: "assets/avatar_image.png",
+        backdrop: "assets/avatar_image.png",
+        link: "/movie-avatar.html",
+        language: "en",
+        overview: "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home."
+    }
+];
