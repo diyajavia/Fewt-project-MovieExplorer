@@ -9,8 +9,11 @@ dist-ssr/
 */dist-ssr/
 
 # Environment Variables
+.env
 .env.local
 .env.*.local
+*.env
+*/.env
 
 # Logs
 *.log
