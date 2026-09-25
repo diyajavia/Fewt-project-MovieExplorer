@@ -17,44 +17,31 @@ function MovieDetails({ watchlist = [], toggleWatchlist }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Load movie details, credits, and similar movies using useEffect and .then()
   useEffect(() => {
-    let isMounted = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setLoading(true);
+    setError(null);
 
-    const fetchMovieData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+    Promise.all([
+      getMovieDetails(movieId),
+      getMovieCredits(movieId),
+      getSimilarMovies(movieId)
+    ])
+      .then(([movieData, creditsData, similarData]) => {
+        setMovie(movieData);
+        setCast(creditsData?.cast || []);
 
-        const [movieData, creditsData, similarData] = await Promise.all([
-          getMovieDetails(movieId),
-          getMovieCredits(movieId).catch(() => ({ cast: [] })),
-          getSimilarMovies(movieId).catch(() => ({ results: [] }))
-        ]);
-
-        if (isMounted) {
-          setMovie(movieData);
-          setCast(creditsData.cast || []);
-          const recResults = similarData.results || [];
-          const withPosters = recResults.filter(m => m.poster_path);
-          const listToDisplay = withPosters.length >= 4 ? withPosters : recResults;
-          setSimilarMovies(listToDisplay);
-          setLoading(false);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error('Error fetching movie details:', err);
-          setError('Failed to load movie details. Please check your connection or try again.');
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchMovieData();
-
-    return () => {
-      isMounted = false;
-    };
+        const recResults = similarData?.results || [];
+        const withPosters = recResults.filter((m) => m.poster_path);
+        setSimilarMovies(withPosters.length >= 4 ? withPosters : recResults);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching movie details:', err);
+        setError('Failed to load movie details. Please check your connection.');
+        setLoading(false);
+      });
   }, [movieId]);
 
   const currentId = movie ? movie.id : Number(movieId);

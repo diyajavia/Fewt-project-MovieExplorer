@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import MovieCard from '../components/MovieCard';
 import { 
@@ -25,20 +25,15 @@ function Search({ watchlist = [], toggleWatchlist }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch genres on mount
+  // 1. Fetch genres on mount using useEffect and .then()
   useEffect(() => {
-    let isMounted = true;
     getGenres()
-      .then(data => {
-        if (isMounted && data.genres) {
+      .then((data) => {
+        if (data?.genres) {
           setGenresList(data.genres);
         }
       })
-      .catch(err => console.error("Error fetching genres:", err));
-
-    return () => {
-      isMounted = false;
-    };
+      .catch((err) => console.error("Error fetching genres:", err));
   }, []);
 
   // Update query state if URL parameter changes
@@ -50,41 +45,34 @@ function Search({ watchlist = [], toggleWatchlist }) {
     }
   }, [searchParams]);
 
-  // Main movie fetch function (Search vs Discover)
-  const fetchMovies = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
+  // 2. Fetch movies using useEffect and .then() whenever query, filters, or page change
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
 
-      let response;
-      if (query.trim()) {
-        // TMDB Search API call
-        response = await searchMovies(query.trim(), page);
-      } else {
-        // TMDB Discover API call with query filters
-        const filters = {
+    const apiCall = query.trim()
+      ? searchMovies(query.trim(), page)
+      : discoverMovies({
           genreId: genre,
           rating: rating,
           year: yearEra,
-          page: page
-        };
-        response = await discoverMovies(filters);
-      }
+          page: page,
+          sortBy: 'popularity.desc'
+        });
 
-      setMovies(response.results || []);
-      setTotalPages(response.total_pages || 1);
-      setTotalResults(response.total_results || (response.results ? response.results.length : 0));
-      setLoading(false);
-    } catch (err) {
-      console.error("Failed to fetch movies in Search:", err);
-      setError("Failed to fetch movie results. Please try again.");
-      setLoading(false);
-    }
+    apiCall
+      .then((data) => {
+        setMovies(data?.results || []);
+        setTotalPages(data?.total_pages || 1);
+        setTotalResults(data?.total_results || (data?.results ? data.results.length : 0));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch movies in Search:", err);
+        setError("Failed to fetch movie results. Please try again.");
+        setLoading(false);
+      });
   }, [query, genre, rating, yearEra, page]);
-
-  useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
 
   // Handle Search Input Change
   const handleQueryChange = (e) => {

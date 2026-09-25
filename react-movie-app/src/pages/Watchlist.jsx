@@ -7,52 +7,38 @@ function Watchlist({ watchlist = [], toggleWatchlist }) {
   const [watchlistMovies, setWatchlistMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Load watchlist movie details using useEffect and .then()
   useEffect(() => {
-    let isMounted = true;
+    if (watchlist.length === 0) {
+      setWatchlistMovies([]);
+      return;
+    }
 
-    const loadWatchlistDetails = async () => {
-      if (watchlist.length === 0) {
-        setWatchlistMovies([]);
-        return;
-      }
+    setLoading(true);
 
-      setLoading(true);
-      try {
-        const moviePromises = watchlist.map(async (id) => {
-          const resolvedId = LEGACY_ID_MAP[id] || id;
-          // Check if already in mock array
-          const existing = MOCK_MOVIES.find(m => m.id === Number(resolvedId) || m.id === Number(id));
-          if (existing) return existing;
+    const moviePromises = watchlist.map((id) => {
+      const resolvedId = LEGACY_ID_MAP[id] || id;
+      const existing = MOCK_MOVIES.find((m) => m.id === Number(resolvedId) || m.id === Number(id));
+      if (existing) return Promise.resolve(existing);
 
-          try {
-            return await getMovieDetails(resolvedId);
-          } catch (e) {
-            return {
-              id: resolvedId,
-              title: `Movie #${resolvedId}`,
-              poster_path: null,
-              vote_average: 7.5,
-              release_date: '2024-01-01'
-            };
-          }
-        });
+      return getMovieDetails(resolvedId).catch(() => ({
+        id: resolvedId,
+        title: `Movie #${resolvedId}`,
+        poster_path: null,
+        vote_average: 7.5,
+        release_date: '2024-01-01'
+      }));
+    });
 
-        const results = await Promise.all(moviePromises);
-        if (isMounted) {
-          setWatchlistMovies(results.filter(Boolean));
-          setLoading(false);
-        }
-      } catch (err) {
+    Promise.all(moviePromises)
+      .then((results) => {
+        setWatchlistMovies(results.filter(Boolean));
+        setLoading(false);
+      })
+      .catch((err) => {
         console.error("Error loading watchlist movies:", err);
-        if (isMounted) setLoading(false);
-      }
-    };
-
-    loadWatchlistDetails();
-
-    return () => {
-      isMounted = false;
-    };
+        setLoading(false);
+      });
   }, [watchlist]);
 
   return (

@@ -1,22 +1,12 @@
-import axios from 'axios';
-
-// Environment variable configuration for TMDB API with verified active fallback key
+// TMDB API Configuration (Base URL and API Key)
+const BASE_URL = 'https://api.themoviedb.org/3';
 const DEFAULT_API_KEY = '2afba9f9458a7c12ebe9718f62d54bf5';
 const ENV_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+// Use custom .env key if provided, else fallback to verified default key
 const API_KEY = (ENV_KEY && ENV_KEY.trim() !== '' && ENV_KEY !== 'YOUR_API_KEY' && ENV_KEY !== 'your_tmdb_api_key_here')
   ? ENV_KEY.trim()
   : DEFAULT_API_KEY;
-
-const api = axios.create({
-  baseURL: 'https://api.themoviedb.org/3'
-});
-
-// Automatically inject API key in every outgoing request
-api.interceptors.request.use((config) => {
-  config.params = config.params || {};
-  config.params.api_key = API_KEY;
-  return config;
-});
 
 // TMDB Image Helpers
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p';
@@ -129,130 +119,124 @@ export const LEGACY_ID_MAP = {
   6: 76600   // Avatar: The Way of Water
 };
 
-// Generic executor: ALWAYS attempts real live TMDB API call first
-const executeRequest = async (url, axiosCall, mockFallback) => {
-  try {
-    const response = await axiosCall();
-    return response.data;
-  } catch (error) {
-    console.warn(`TMDB API request to ${url} failed. Using fallback data.`, error.message);
-    if (mockFallback) return mockFallback();
-    throw error;
-  }
-};
+// Simple beginner-friendly helper using fetch().then().then()
+function fetchFromTMDB(endpoint, queryParams = {}, fallbackData = null) {
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    ...queryParams
+  });
 
-// ==========================================
-// REAL LIVE TMDB API EXPORT METHODS
-// ==========================================
+  const fullUrl = `${BASE_URL}${endpoint}?${params.toString()}`;
 
-// Week 8: Homepage live feeds
+  // Direct fetch().then().then() method
+  return fetch(fullUrl)
+    .then((response) => response.json()) // 1st .then: convert response to JSON
+    .then((data) => data)                // 2nd .then: return the movie data
+    .catch((error) => {
+      console.warn(`Error fetching ${endpoint}:`, error.message);
+      if (fallbackData) {
+        return typeof fallbackData === 'function' ? fallbackData() : fallbackData;
+      }
+      return null;
+    });
+}
+
+// ============================================================================
+// MOVIE API FUNCTIONS (EXPORTED FOR USE IN REACT COMPONENTS)
+// ============================================================================
+
+// 1. Get Trending Movies (for Homepage)
 export const getTrendingMovies = () => {
-  return executeRequest(
-    '/trending/movie/day',
-    () => api.get('/trending/movie/day'),
-    () => ({ results: MOCK_MOVIES })
-  );
+  return fetchFromTMDB('/trending/movie/day', {}, { results: MOCK_MOVIES });
 };
 
+// 2. Get Popular Movies (for Homepage)
 export const getPopularMovies = () => {
-  return executeRequest(
-    '/movie/popular',
-    () => api.get('/movie/popular'),
-    () => ({ results: MOCK_MOVIES.filter(m => m.category === 'popular' || m.category === 'trending') })
-  );
+  return fetchFromTMDB('/movie/popular', {}, () => ({
+    results: MOCK_MOVIES.filter((m) => m.category === 'popular' || m.category === 'trending')
+  }));
 };
 
+// 3. Get Top Rated Movies (for Homepage)
 export const getTopRatedMovies = () => {
-  return executeRequest(
-    '/movie/top_rated',
-    () => api.get('/movie/top_rated'),
-    () => ({ results: MOCK_MOVIES.filter(m => m.category === 'top_rated' || m.vote_average >= 8.5) })
-  );
+  return fetchFromTMDB('/movie/top_rated', {}, () => ({
+    results: MOCK_MOVIES.filter((m) => m.category === 'top_rated' || m.vote_average >= 8.5)
+  }));
 };
 
+// 4. Get Upcoming Movies (for Homepage)
 export const getUpcomingMovies = () => {
-  return executeRequest(
-    '/movie/upcoming',
-    () => api.get('/movie/upcoming'),
-    () => ({ results: MOCK_MOVIES.filter(m => m.category === 'upcoming') })
-  );
+  return fetchFromTMDB('/movie/upcoming', {}, () => ({
+    results: MOCK_MOVIES.filter((m) => m.category === 'upcoming')
+  }));
 };
 
-// Week 9: Movie Details, Credits & Similar
+// 5. Get Movie Details by ID (for MovieDetails Page)
 export const getMovieDetails = (movieId) => {
   const resolvedId = LEGACY_ID_MAP[movieId] || movieId;
-  return executeRequest(
-    `/movie/${resolvedId}`,
-    () => api.get(`/movie/${resolvedId}`),
-    () => {
-      const movie = MOCK_MOVIES.find(m => m.id === Number(resolvedId) || m.id === Number(movieId));
-      if (movie) return movie;
-      throw new Error(`Movie details unavailable for ID ${movieId}`);
-    }
-  );
+  return fetchFromTMDB(`/movie/${resolvedId}`, {}, () => {
+    const movie = MOCK_MOVIES.find((m) => m.id === Number(resolvedId) || m.id === Number(movieId));
+    if (movie) return movie;
+    throw new Error(`Movie details unavailable for ID ${movieId}`);
+  });
 };
 
+// 6. Get Cast & Credits (for MovieDetails Page)
 export const getMovieCredits = (movieId) => {
   const resolvedId = LEGACY_ID_MAP[movieId] || movieId;
-  return executeRequest(
-    `/movie/${resolvedId}/credits`,
-    () => api.get(`/movie/${resolvedId}/credits`),
-    () => ({ id: resolvedId, cast: [] })
-  );
+  return fetchFromTMDB(`/movie/${resolvedId}/credits`, {}, { id: resolvedId, cast: [] });
 };
 
-export const getSimilarMovies = async (movieId) => {
+// 7. Get Similar / Recommended Movies (for MovieDetails Page)
+export const getSimilarMovies = (movieId) => {
   const resolvedId = LEGACY_ID_MAP[movieId] || movieId;
-  try {
-    // Try curated recommendations first (higher quality, better posters)
-    const recs = await api.get(`/movie/${resolvedId}/recommendations`);
-    if (recs.data && Array.isArray(recs.data.results) && recs.data.results.length > 0) {
-      return recs.data;
-    }
-  } catch (e) {
-    // Fall back to similar
-  }
 
-  return executeRequest(
-    `/movie/${resolvedId}/similar`,
-    () => api.get(`/movie/${resolvedId}/similar`),
-    () => {
-      const similar = MOCK_MOVIES.filter(m => m.id !== Number(resolvedId));
+  // First try recommendations; if empty or fails, fetch similar movies
+  return fetchFromTMDB(`/movie/${resolvedId}/recommendations`)
+    .then((data) => {
+      if (data && Array.isArray(data.results) && data.results.length > 0) {
+        return data;
+      }
+      return fetchFromTMDB(`/movie/${resolvedId}/similar`);
+    })
+    .catch(() => {
+      // Fallback if network fails
+      const similar = MOCK_MOVIES.filter((m) => m.id !== Number(resolvedId));
       return { results: similar.slice(0, 4) };
-    }
-  );
+    });
 };
 
-// Week 10: Filter & Multi-page Pagination
+// 8. Get Genre List (for Search Page filter dropdown)
 export const getGenres = () => {
-  return executeRequest(
-    '/genre/movie/list',
-    () => api.get('/genre/movie/list'),
-    () => ({ genres: Object.entries(GENRE_MAP).map(([id, name]) => ({ id: Number(id), name })) })
-  );
+  const fallbackGenres = Object.entries(GENRE_MAP).map(([id, name]) => ({
+    id: Number(id),
+    name: name
+  }));
+  return fetchFromTMDB('/genre/movie/list', {}, { genres: fallbackGenres });
 };
 
+// 9. Search Movies by Keyword (for Search Bar)
 export const searchMovies = (query, page = 1) => {
-  return executeRequest(
-    `/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
-    () => api.get('/search/movie', { params: { query, page } }),
-    () => ({ results: [], page: 1, total_pages: 1, total_results: 0 })
+  return fetchFromTMDB(
+    '/search/movie',
+    { query, page },
+    { results: [], page: 1, total_pages: 1, total_results: 0 }
   );
 };
 
+// 10. Discover Movies with Filters (Genre, Year, Rating, Page)
 export const discoverMovies = (filters = {}) => {
-  return executeRequest(
-    `/discover/movie`,
-    () => {
-      const params = {};
-      if (filters.genreId) params.with_genres = filters.genreId;
-      if (filters.year) params.primary_release_year = filters.year;
-      if (filters.rating) params['vote_average.gte'] = filters.rating;
-      if (filters.page) params.page = filters.page;
-      if (filters.sortBy) params.sort_by = filters.sortBy;
-      return api.get('/discover/movie', { params });
-    },
-    () => ({ results: MOCK_MOVIES, page: 1, total_pages: 1, total_results: MOCK_MOVIES.length })
+  const params = {};
+  if (filters.genreId) params.with_genres = filters.genreId;
+  if (filters.year) params.primary_release_year = filters.year;
+  if (filters.rating) params['vote_average.gte'] = filters.rating;
+  if (filters.page) params.page = filters.page;
+  if (filters.sortBy) params.sort_by = filters.sortBy;
+
+  return fetchFromTMDB(
+    '/discover/movie',
+    params,
+    { results: MOCK_MOVIES, page: 1, total_pages: 1, total_results: MOCK_MOVIES.length }
   );
 };
 
@@ -312,4 +296,4 @@ export const MOCK_MOVIES = [
   }
 ];
 
-export default api;
+export default fetchFromTMDB;

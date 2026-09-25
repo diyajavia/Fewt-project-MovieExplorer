@@ -22,43 +22,29 @@ function Home({ watchlist = [], toggleWatchlist }) {
   // Live search state
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Fetch movies on page load using useEffect and .then()
   useEffect(() => {
-    let isMounted = true;
+    setLoading(true);
+    setError(null);
 
-    const fetchHomeFeeds = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // Fetch real live TMDB feeds concurrently
-        const [trendingRes, popularRes, topRatedRes, upcomingRes] = await Promise.all([
-          getTrendingMovies(),
-          getPopularMovies(),
-          getTopRatedMovies(),
-          getUpcomingMovies()
-        ]);
-
-        if (isMounted) {
-          setTrendingMovies(trendingRes.results || []);
-          setPopularMovies(popularRes.results || []);
-          setTopRatedMovies(topRatedRes.results || []);
-          setUpcomingMovies(upcomingRes.results || []);
-          setLoading(false);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error('Error fetching live home feeds from TMDB:', err);
-          setError('Failed to fetch live movie data from TMDB API.');
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchHomeFeeds();
-
-    return () => {
-      isMounted = false;
-    };
+    Promise.all([
+      getTrendingMovies(),
+      getPopularMovies(),
+      getTopRatedMovies(),
+      getUpcomingMovies()
+    ])
+      .then(([trendingData, popularData, topRatedData, upcomingData]) => {
+        setTrendingMovies(trendingData?.results || []);
+        setPopularMovies(popularData?.results || []);
+        setTopRatedMovies(topRatedData?.results || []);
+        setUpcomingMovies(upcomingData?.results || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching movie feeds:', err);
+        setError('Failed to fetch live movie data.');
+        setLoading(false);
+      });
   }, []);
 
   const handleLiveSearchSubmit = (e) => {
